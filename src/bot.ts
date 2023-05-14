@@ -68,14 +68,16 @@ export class Bot {
             errorMsg = await submitTask({
                 state: topic + ':' + talkerName,
                 action: "UV",
-                content: content
+                content: content,
+                notifyHook: "http://47.236.20.243:4120/notify"
             });
         } else if (rawText.startsWith('/imagine ')) {
             const prompt = rawText.substring(9);
             errorMsg = await submitTask({
                 state: topic + ':' + talkerName,
                 action: "IMAGINE",
-                prompt: prompt
+                prompt: prompt,
+                notifyHook: "http://47.236.20.243:4120/notify"
             });
         }
         if (errorMsg) {
