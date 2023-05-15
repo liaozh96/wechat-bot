@@ -78,7 +78,18 @@ app.post("/notify", async (req: Request, res: Response): Promise<Response> => {
       } else {
         const taskId = req.body.id;
         const prompt = req.body.prompt;
-        await room.say(`@${userName} \n🎨 ${action == 'IMAGINE' ? '绘图' : '变换'}成功，用时 ${displayMilliseconds(time)}\n✨ Prompt: ${prompt}\n📨 任务ID: ${taskId}\n🪄 放大 U1～U4 ，变换 V1～V4\n✏️ 使用[/up 任务ID 操作]\n/up ${taskId} U1`);
+        const actionStr = action == 'IMAGINE' ? '绘图' : '变换';
+        const costTime = displayMilliseconds(time);
+        const result = "@" + userName + " \n"
+                + "🎨 " + actionStr + "成功，用时 " + costTime + "\n"
+                + "✨ Prompt: " + prompt + " \n"
+                + "📨 任务ID: " + taskId + " \n"
+                + "🪄 放大 U1～U4 ，变换 V1～V4\n✏️ 使用[/up 任务ID 操作]\n "
+                + "✏️ /up " + taskId + " U1\n"
+                + "📕如果你还不会画，赶紧去听课，结合老师准备的提示词手册使用效果更佳 \n"
+                + "听课链接https://ndf.xet.tech/s/3gGLLX\n"
+        await room.say(result);
+        //await room.say(`@${userName} \n🎨 ${action == 'IMAGINE' ? '绘图' : '变换'}成功，用时 ${displayMilliseconds(time)}\n✨ Prompt: ${prompt}\n📨 任务ID: ${taskId}\n🪄 放大 U1～U4 ，变换 V1～V4\n✏️ 使用[/up 任务ID 操作]\n/up ${taskId} U1`);
         const image = FileBox.fromUrl(req.body.imageUrl);
         room.say(image);
       }
